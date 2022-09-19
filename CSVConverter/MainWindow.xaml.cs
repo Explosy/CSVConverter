@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,9 +22,30 @@ namespace CSVConverter
     /// </summary>
     public partial class MainWindow : Window
     {
+        private FileParser fileParser;
+        public DataTable dataTable;
+        public DataView viewTable
+        {
+            get { return dataTable.DefaultView; }
+        }
+
         public MainWindow()
         {
             InitializeComponent();
+            fileParser = new FileParser();
+        }
+
+        private void OpenCSVFile(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "CSV files (*.csv)|*.csv|All files (*.*)|*.*";
+            openFileDialog.InitialDirectory = Environment.CurrentDirectory;
+            if (openFileDialog.ShowDialog() == true)
+            {
+                dataTable = fileParser.GetDataFromCSV(openFileDialog.FileName);
+            }
+            dataGrid.ItemsSource = dataTable.DefaultView;
+
         }
     }
 }
