@@ -71,7 +71,39 @@ namespace CSVConverter
 
         private void OpenJSONFile(object sender, RoutedEventArgs e)
         {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "JSON files (*.json)|*.json|All files (*.*)|*.*";
+            openFileDialog.InitialDirectory = Environment.CurrentDirectory;
+            if (openFileDialog.ShowDialog() == true)
+            {
+                dataTable = fileParser.GetDataFromJSON(openFileDialog.FileName);
+            }
+            dataTable.TableName = openFileDialog.SafeFileName;
+            dataGrid.ItemsSource = dataTable.DefaultView;
+            IEnumerable<Button> buttons = btnStack.Children.OfType<Button>();
+            foreach (var button in buttons)
+            {
+                button.IsEnabled = true;
+            }
+        }
+        
+        private void SaveCSVFile(object sender, RoutedEventArgs e)
+        {
 
+        }
+
+        private void SaveXMLFile(object sender, RoutedEventArgs e)
+        {
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.InitialDirectory = Environment.CurrentDirectory;
+            saveFileDialog.AddExtension = true;
+            saveFileDialog.DefaultExt = "xml";
+            saveFileDialog.FileName = "save.xml";
+            saveFileDialog.Filter = "XML files (*.xml)|*.xml|All files (*.*)|*.*";
+            if (saveFileDialog.ShowDialog() == true)
+            {
+                fileSaver.SaveDataToXML(dataTable, saveFileDialog.FileName);
+            }
         }
 
         private void SaveJSONFile(object sender, RoutedEventArgs e)
@@ -87,20 +119,7 @@ namespace CSVConverter
                 fileSaver.SaveDataToJSON(dataTable, saveFileDialog.FileName);
             }     
         }
-        private void SaveXMLFile(object sender, RoutedEventArgs e)
-        {
-            SaveFileDialog saveFileDialog = new SaveFileDialog();
-            saveFileDialog.InitialDirectory = Environment.CurrentDirectory;
-            saveFileDialog.AddExtension = true;
-            saveFileDialog.DefaultExt = "xml";
-            saveFileDialog.FileName = "save.xml";
-            saveFileDialog.Filter = "XML files (*.xml)|*.xml|All files (*.*)|*.*";
-            if (saveFileDialog.ShowDialog() == true)
-            {
-                fileSaver.SaveDataToXML(dataTable, saveFileDialog.FileName);
-            }
-        }
-
+        
         private void OpenDiagramm(object sender, RoutedEventArgs e)
         {
             DiagrammWindow diagrammWindow = new DiagrammWindow(dataTable);

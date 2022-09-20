@@ -10,8 +10,7 @@ namespace CSVConverter
     {
         public void SaveDataToJSON(DataTable data, string filePath)
         {
-            string jsonString = JsonConvert.SerializeObject(data.AsEnumerable()
-                                                                .Take(10), Formatting.Indented);
+            string jsonString = JsonConvert.SerializeObject(data, Formatting.Indented);
             using (StreamWriter streamWriter = new StreamWriter(filePath, false))
             {
                 streamWriter.Write(jsonString);

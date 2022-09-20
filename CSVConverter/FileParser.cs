@@ -1,4 +1,5 @@
 ﻿using GenericParsing;
+using Newtonsoft.Json;
 using System;
 using System.Data;
 using System.IO;
@@ -22,18 +23,25 @@ namespace CSVConverter
         public DataTable GetDataFromXML(string filePath)
         {
             DataTable result = new DataTable();
-            DataSet ds = new DataSet();
+            DataSet dataSet = new DataSet();
             using (StreamReader streamReader = new StreamReader(filePath))
             {
-                ds.ReadXml(streamReader);
+                dataSet.ReadXml(streamReader);
             }
-            result = ds.Tables[0];
+            result = dataSet.Tables[0];
             return result;
         }
 
         public DataTable GetDataFromJSON(string filePath)
         {
-            throw new NotImplementedException();
+            DataTable result = new DataTable();
+            string jsonstring;
+            using (StreamReader streamReader = new StreamReader(filePath))
+            {
+                jsonstring = streamReader.ReadToEnd();
+            }
+            result = JsonConvert.DeserializeObject<DataTable>(jsonstring);
+            return result;
         }
     }
 }
