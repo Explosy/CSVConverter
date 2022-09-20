@@ -1,29 +1,31 @@
-﻿using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.Data;
-using System.IO;
-using System.Linq;
+using System.Windows.Forms;
 
 namespace CSVConverter
 {
     internal class FileSaver
     {
-        public void SaveDataToJSON(DataTable data, string filePath)
+        private SaveFileDialog saveFileDialog;
+        public ISaver SaveStrategy { private get; set; }
+
+        public FileSaver()
         {
-            string jsonString = JsonConvert.SerializeObject(data, Formatting.Indented);
-            using (StreamWriter streamWriter = new StreamWriter(filePath, false))
-            {
-                streamWriter.Write(jsonString);
-            }
+            saveFileDialog = new SaveFileDialog();
+            saveFileDialog.InitialDirectory = Environment.CurrentDirectory;
+            saveFileDialog.AddExtension = true;
         }
 
-        public void SaveDataToXML(DataTable data, string filePath)
+        public void Save (DataTable data)
         {
-            using (StreamWriter streamWriter = new StreamWriter(filePath, false))
+            SaveStrategy.SetupFileDialog(saveFileDialog);
+            if (saveFileDialog.ShowDialog() == DialogResult.OK)
             {
-                data.WriteXml(streamWriter);
+                string filePath = saveFileDialog.FileName;
+                SaveStrategy.Save(data, filePath);
             }
         }
-
     }
+
+    
 }

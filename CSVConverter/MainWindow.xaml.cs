@@ -30,7 +30,7 @@ namespace CSVConverter
         {
             InitializeComponent();
             fileParser = new FileParser();
-            fileSaver = new FileSaver(); 
+            fileSaver = new FileSaver();
         }
 
         private void OpenCSVFile(object sender, RoutedEventArgs e)
@@ -94,30 +94,14 @@ namespace CSVConverter
 
         private void SaveXMLFile(object sender, RoutedEventArgs e)
         {
-            SaveFileDialog saveFileDialog = new SaveFileDialog();
-            saveFileDialog.InitialDirectory = Environment.CurrentDirectory;
-            saveFileDialog.AddExtension = true;
-            saveFileDialog.DefaultExt = "xml";
-            saveFileDialog.FileName = "save.xml";
-            saveFileDialog.Filter = "XML files (*.xml)|*.xml|All files (*.*)|*.*";
-            if (saveFileDialog.ShowDialog() == true)
-            {
-                fileSaver.SaveDataToXML(dataTable, saveFileDialog.FileName);
-            }
+            fileSaver.SaveStrategy = new XmlSaver();
+            fileSaver.Save(dataTable);
         }
 
         private void SaveJSONFile(object sender, RoutedEventArgs e)
         {
-            SaveFileDialog saveFileDialog = new SaveFileDialog();
-            saveFileDialog.InitialDirectory = Environment.CurrentDirectory;
-            saveFileDialog.AddExtension = true;
-            saveFileDialog.DefaultExt = "json";
-            saveFileDialog.FileName = "save.json";
-            saveFileDialog.Filter = "JSON files (*.json)|*.json|All files (*.*)|*.*";
-            if (saveFileDialog.ShowDialog() == true)
-            {
-                fileSaver.SaveDataToJSON(dataTable, saveFileDialog.FileName);
-            }     
+            fileSaver.SaveStrategy = new JsonSaver();
+            fileSaver.Save(dataTable);
         }
         
         private void OpenDiagramm(object sender, RoutedEventArgs e)
