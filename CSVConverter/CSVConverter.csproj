@@ -105,6 +105,7 @@
     </Compile>
     <Compile Include="FileParser.cs" />
     <Compile Include="FileSaver.cs" />
+    <Compile Include="IParser.cs" />
     <Compile Include="ISaver.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>

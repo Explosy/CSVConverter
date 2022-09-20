@@ -35,56 +35,26 @@ namespace CSVConverter
 
         private void OpenCSVFile(object sender, RoutedEventArgs e)
         {
-            OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.Filter = "CSV files (*.csv)|*.csv|All files (*.*)|*.*";
-            openFileDialog.InitialDirectory = Environment.CurrentDirectory;
-            if (openFileDialog.ShowDialog() == true)
-            {
-                dataTable = fileParser.GetDataFromCSV(openFileDialog.FileName);
-            }
-            dataTable.TableName = openFileDialog.SafeFileName;
+            fileParser.ParseStrategy = new CsvParser();
+            dataTable = fileParser.GetData();
             dataGrid.ItemsSource = dataTable.DefaultView;
-            IEnumerable<Button> buttons = btnStack.Children.OfType<Button>();
-            foreach (var button in buttons)
-            {
-                button.IsEnabled = true;
-            }
+            EnableButton();
         }
 
         private void OpenXMLFile(object sender, RoutedEventArgs e)
         {
-            OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.Filter = "XML files (*.xml)|*.xml|All files (*.*)|*.*";
-            openFileDialog.InitialDirectory = Environment.CurrentDirectory;
-            if (openFileDialog.ShowDialog() == true)
-            {
-                dataTable = fileParser.GetDataFromXML(openFileDialog.FileName);
-            }
-            dataTable.TableName = openFileDialog.SafeFileName;
+            fileParser.ParseStrategy = new XmlParser();
+            dataTable = fileParser.GetData();
             dataGrid.ItemsSource = dataTable.DefaultView;
-            IEnumerable<Button> buttons = btnStack.Children.OfType<Button>();
-            foreach (var button in buttons)
-            {
-                button.IsEnabled = true;
-            }
+            EnableButton();
         }
 
         private void OpenJSONFile(object sender, RoutedEventArgs e)
         {
-            OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.Filter = "JSON files (*.json)|*.json|All files (*.*)|*.*";
-            openFileDialog.InitialDirectory = Environment.CurrentDirectory;
-            if (openFileDialog.ShowDialog() == true)
-            {
-                dataTable = fileParser.GetDataFromJSON(openFileDialog.FileName);
-            }
-            dataTable.TableName = openFileDialog.SafeFileName;
+            fileParser.ParseStrategy = new JsonParser();
+            dataTable = fileParser.GetData();
             dataGrid.ItemsSource = dataTable.DefaultView;
-            IEnumerable<Button> buttons = btnStack.Children.OfType<Button>();
-            foreach (var button in buttons)
-            {
-                button.IsEnabled = true;
-            }
+            EnableButton();
         }
         
         private void SaveCSVFile(object sender, RoutedEventArgs e)
@@ -109,6 +79,15 @@ namespace CSVConverter
             DiagrammWindow diagrammWindow = new DiagrammWindow(dataTable);
             diagrammWindow.Title = "Diagramm";
             diagrammWindow.Show();
+        }
+
+        private void EnableButton()
+        {
+            IEnumerable<Button> buttons = btnStack.Children.OfType<Button>();
+            foreach (var button in buttons)
+            {
+                button.IsEnabled = true;
+            }
         }
     }
 }

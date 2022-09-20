@@ -1,47 +1,31 @@
-﻿using GenericParsing;
-using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.Data;
-using System.IO;
+using System.Windows.Forms;
 
 namespace CSVConverter
 {
     internal class FileParser
     {
-        public DataTable GetDataFromCSV(string filePath)
+        private OpenFileDialog openFileDialog;
+        public IParser ParseStrategy { private get; set; }
+
+        public FileParser()
         {
-            DataTable result = new DataTable();
-            using (GenericParserAdapter parser = new GenericParserAdapter(filePath))
-            {
-                parser.ColumnDelimiter = ';';
-                parser.FirstRowHasHeader = true;
-                result = parser.GetDataTable();
-            }
-            return result;
+            openFileDialog = new OpenFileDialog();
+            openFileDialog.InitialDirectory = Environment.CurrentDirectory;
         }
 
-        public DataTable GetDataFromXML(string filePath)
+        public DataTable GetData()
         {
-            DataTable result = new DataTable();
-            DataSet dataSet = new DataSet();
-            using (StreamReader streamReader = new StreamReader(filePath))
+            DataTable dataTable = new DataTable();
+            ParseStrategy.SetupFileDialog(openFileDialog);
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
-                dataSet.ReadXml(streamReader);
+                string filePath = openFileDialog.FileName;
+                dataTable = ParseStrategy.GetData(filePath);
             }
-            result = dataSet.Tables[0];
-            return result;
-        }
-
-        public DataTable GetDataFromJSON(string filePath)
-        {
-            DataTable result = new DataTable();
-            string jsonstring;
-            using (StreamReader streamReader = new StreamReader(filePath))
-            {
-                jsonstring = streamReader.ReadToEnd();
-            }
-            result = JsonConvert.DeserializeObject<DataTable>(jsonstring);
-            return result;
+            dataTable.TableName = openFileDialog.SafeFileName;
+            return dataTable;
         }
     }
 }
