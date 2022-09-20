@@ -15,7 +15,7 @@
             <Button Height="20" Margin="10" Click="OpenCSVFile">Загрузить из CSV</Button>
             <Button Height="20" Margin="10" Click="OpenXMLFile">Загрузить из XML</Button>
             <Button Height="20" Margin="10" Click="OpenJSONFile">Загрузить из JSON</Button>
-            <Button Height="20" Margin="10" IsEnabled="False">Диаграмма по странам</Button>
+            <Button Height="20" Margin="10" Click="OpenDiagramm" IsEnabled="False">Диаграмма по странам</Button>
             <Button Height="20" Margin="10" Click="SaveXMLFile" IsEnabled="False">Сохранить в XML</Button>
             <Button Height="20" Margin="10" Click="SaveJSONFile" IsEnabled="False">Сохранить в JSON</Button>
             <Button Height="20" Margin="10" IsEnabled="False">Экспорт в Excel</Button>

@@ -87,5 +87,12 @@ namespace CSVConverter
                 fileSaver.SaveDataToXML(dataTable, saveFileDialog.FileName);
             }
         }
+
+        private void OpenDiagramm(object sender, RoutedEventArgs e)
+        {
+            DiagrammWindow diagrammWindow = new DiagrammWindow(dataTable);
+            diagrammWindow.Title = "Diagramm";
+            diagrammWindow.Show();
+        }
     }
 }
