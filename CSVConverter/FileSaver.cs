@@ -8,19 +8,19 @@ namespace CSVConverter
 {
     internal class FileSaver
     {
-        public void SaveDataToJSON(DataTable data, string path)
+        public void SaveDataToJSON(DataTable data, string filePath)
         {
             string jsonString = JsonConvert.SerializeObject(data.AsEnumerable()
                                                                 .Take(10), Formatting.Indented);
-            using (StreamWriter streamWriter = new StreamWriter(path, false))
+            using (StreamWriter streamWriter = new StreamWriter(filePath, false))
             {
                 streamWriter.Write(jsonString);
             }
         }
 
-        public void SaveDataToXML(DataTable data, string path)
+        public void SaveDataToXML(DataTable data, string filePath)
         {
-            using (StreamWriter streamWriter = new StreamWriter(path, false))
+            using (StreamWriter streamWriter = new StreamWriter(filePath, false))
             {
                 data.WriteXml(streamWriter);
             }

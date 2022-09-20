@@ -1,6 +1,7 @@
 ﻿using GenericParsing;
 using System;
 using System.Data;
+using System.IO;
 
 namespace CSVConverter
 {
@@ -20,7 +21,14 @@ namespace CSVConverter
 
         public DataTable GetDataFromXML(string filePath)
         {
-            throw new NotImplementedException();
+            DataTable result = new DataTable();
+            DataSet ds = new DataSet();
+            using (StreamReader streamReader = new StreamReader(filePath))
+            {
+                ds.ReadXml(streamReader);
+            }
+            result = ds.Tables[0];
+            return result;
         }
 
         public DataTable GetDataFromJSON(string filePath)

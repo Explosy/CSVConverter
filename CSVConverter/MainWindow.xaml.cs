@@ -52,8 +52,21 @@ namespace CSVConverter
         }
 
         private void OpenXMLFile(object sender, RoutedEventArgs e)
-        { 
-            
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "XML files (*.xml)|*.xml|All files (*.*)|*.*";
+            openFileDialog.InitialDirectory = Environment.CurrentDirectory;
+            if (openFileDialog.ShowDialog() == true)
+            {
+                dataTable = fileParser.GetDataFromXML(openFileDialog.FileName);
+            }
+            dataTable.TableName = openFileDialog.SafeFileName;
+            dataGrid.ItemsSource = dataTable.DefaultView;
+            IEnumerable<Button> buttons = btnStack.Children.OfType<Button>();
+            foreach (var button in buttons)
+            {
+                button.IsEnabled = true;
+            }
         }
 
         private void OpenJSONFile(object sender, RoutedEventArgs e)
