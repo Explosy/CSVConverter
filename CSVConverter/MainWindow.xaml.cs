@@ -24,6 +24,7 @@ namespace CSVConverter
     {
         private FileParser fileParser;
         private FileSaver fileSaver;
+        private Exporter exporter;
         private DataTable dataTable;
 
         public MainWindow()
@@ -31,6 +32,7 @@ namespace CSVConverter
             InitializeComponent();
             fileParser = new FileParser();
             fileSaver = new FileSaver();
+            exporter = new Exporter();
         }
 
         private void OpenCSVFile(object sender, RoutedEventArgs e)
@@ -59,7 +61,7 @@ namespace CSVConverter
         
         private void SaveCSVFile(object sender, RoutedEventArgs e)
         {
-
+            throw new NotImplementedException();
         }
 
         private void SaveXMLFile(object sender, RoutedEventArgs e)
@@ -79,6 +81,18 @@ namespace CSVConverter
             DiagrammWindow diagrammWindow = new DiagrammWindow(dataTable);
             diagrammWindow.Title = "Diagramm";
             diagrammWindow.Show();
+        }
+
+        private void ExportToExcel(object sender, RoutedEventArgs e)
+        {
+            exporter.ExportStrategy = new ExcelExporter();
+            exporter.Export(dataTable);
+        }
+
+        private void ExportToWord(object sender, RoutedEventArgs e)
+        {
+            exporter.ExportStrategy = new WordExporter();
+            exporter.Export(dataTable);
         }
 
         private void EnableButton()

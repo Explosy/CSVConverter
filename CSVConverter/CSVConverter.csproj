@@ -105,6 +105,7 @@
     </Compile>
     <Compile Include="FileParser.cs" />
     <Compile Include="FileSaver.cs" />
+    <Compile Include="IExporter.cs" />
     <Compile Include="IParser.cs" />
     <Compile Include="ISaver.cs" />
     <Compile Include="MainWindow.xaml.cs">
@@ -113,7 +114,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="OfficeExporter.cs" />
+    <Compile Include="Exporter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>

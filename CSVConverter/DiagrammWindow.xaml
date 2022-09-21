@@ -9,9 +9,14 @@
         mc:Ignorable="d"
         Title="DiagrammWindow" Height="450" Width="800">
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition></RowDefinition>
+            <RowDefinition Height="30"></RowDefinition>
+        </Grid.RowDefinitions>
         <WindowsFormsHost>
             <wfcharting:Chart x:Name="chart">
             </wfcharting:Chart>
         </WindowsFormsHost>
+        <Button Grid.Row="1" Height="20" Margin="0,0,10,0" VerticalAlignment="Center" HorizontalAlignment="Right">Экспорт в Excel</Button>
     </Grid>
 </Window>
