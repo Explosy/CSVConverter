@@ -1,8 +1,11 @@
-﻿using Newtonsoft.Json;
-using System;
+﻿using System;
+using System.Collections.Generic;
 using System.Data;
 using System.IO;
+using System.Linq;
+using System.Text;
 using System.Windows.Forms;
+using Newtonsoft.Json;
 
 namespace CSVConverter
 {
@@ -16,7 +19,19 @@ namespace CSVConverter
     {
         public void Save(DataTable data, string filePath)
         {
-            throw new NotImplementedException();
+            StringBuilder sb = new StringBuilder();
+
+            IEnumerable<string> columnNames = data.Columns.Cast<DataColumn>().
+                                              Select(column => column.ColumnName);
+            sb.AppendLine(string.Join(";", columnNames));
+
+            foreach (DataRow row in data.Rows)
+            {
+                IEnumerable<string> fields = row.ItemArray.Select(field => field.ToString());
+                sb.AppendLine(string.Join(";", fields));
+            }
+
+            File.WriteAllText(filePath, sb.ToString());
         }
 
         public void SetupFileDialog(SaveFileDialog saveFileDialog)

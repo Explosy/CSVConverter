@@ -61,7 +61,8 @@ namespace CSVConverter
         
         private void SaveCSVFile(object sender, RoutedEventArgs e)
         {
-            throw new NotImplementedException();
+            fileSaver.SaveStrategy = new CsvSaver();
+            fileSaver.Save(dataTable);
         }
 
         private void SaveXMLFile(object sender, RoutedEventArgs e)
