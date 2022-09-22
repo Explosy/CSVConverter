@@ -1,10 +1,8 @@
-﻿
-using System;
+﻿using System;
 using System.Data;
 using System.Linq;
-using System.Windows.Documents;
+using CSVConverter.Services.WordComponents;
 using Excel = Microsoft.Office.Interop.Excel;
-using Word = Microsoft.Office.Interop.Word;
 
 namespace CSVConverter
 {
@@ -17,42 +15,12 @@ namespace CSVConverter
     {
         public void Export(DataTable dataTable)
         {
-            object objMissing = System.Reflection.Missing.Value;
+            WordComponents wordComponents = new WordComponents();
             
-            Word.Application application = new Word.Application();
-            application.Visible = true;
-            var document = application.Documents.Add();
-
-            int tableRowCount = 10;
-            int tableColumnCount = 10;
-            
-            object objEndOfDoc = "\\endofdoc";
-            
-            Word.Range WordRange = document.Bookmarks.get_Item(ref objEndOfDoc).Range;
-            Word.Table wordTable = document.Tables.Add(WordRange, tableRowCount, 6, ref objMissing, ref objMissing);
-
-            int iTableRow = 1;
-            int iTableCol = 1;
-            for (int i = 0; i < tableColumnCount; i++)
-            {
-                if (i > 0 && i < 5) continue;
-                wordTable.Cell(iTableRow, iTableCol).Range.Text = dataTable.Columns[i].ColumnName;
-                iTableCol++;
-            }
-            iTableRow++;
-            for (int i = 0; i < tableRowCount; i++)
-            {
-                iTableCol = 1;
-                for (int j = 0; j < tableColumnCount; j++)
-                {
-                    if (j > 0 && j < 5) continue;
-                    wordTable.Cell(iTableRow, iTableCol).Range.Text = dataTable.Rows[i][j].ToString();
-                    iTableCol++;
-                }
-                iTableRow++;
-            }
-
-            wordTable.Borders.Enable = 1;
+            var document = wordComponents.CreateNewDoc();
+            wordComponents.AddTitle("Сводный отчет", document);
+            wordComponents.AddText("Таблица. Информация о топ 10 суперкомпьютеров в мире", document);
+            wordComponents.AddTable(dataTable, 10, document);
         }
     }
 

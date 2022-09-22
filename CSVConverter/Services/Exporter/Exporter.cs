@@ -1,5 +1,4 @@
-﻿using System;
-using System.Data;
+﻿using System.Data;
 
 
 
@@ -11,6 +10,8 @@ namespace CSVConverter
         
         public void Export(DataTable dataTable)
         {
+            TablePreparer tablePreparer = new TablePreparer();
+            tablePreparer.DeleteColumns(dataTable, 7, new string[] { "Previous Rank", "First Appearance", "First Rank" });
             ExportStrategy.Export(dataTable);
         }
     }

@@ -88,6 +88,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Services\TablePreparer\TablePreparer.cs" />
+    <Compile Include="Services\Components\WordComponents.cs" />
     <Page Include="DiagrammWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -103,18 +105,18 @@
     <Compile Include="DiagrammWindow.xaml.cs">
       <DependentUpon>DiagrammWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="FileParser.cs" />
-    <Compile Include="FileSaver.cs" />
-    <Compile Include="IExporter.cs" />
-    <Compile Include="IParser.cs" />
-    <Compile Include="ISaver.cs" />
+    <Compile Include="Services\Parser\FileParser.cs" />
+    <Compile Include="Services\Saver\FileSaver.cs" />
+    <Compile Include="Services\Exporter\IExporter.cs" />
+    <Compile Include="Services\Parser\IParser.cs" />
+    <Compile Include="Services\Saver\ISaver.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Exporter.cs" />
+    <Compile Include="Services\Exporter\Exporter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
