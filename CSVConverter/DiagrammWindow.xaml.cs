@@ -1,6 +1,6 @@
-﻿using System;
+﻿
+using System;
 using System.Data;
-using System.Drawing;
 using System.Linq;
 using System.Windows;
 using System.Windows.Forms.DataVisualization.Charting;
@@ -12,10 +12,12 @@ namespace CSVConverter
     /// </summary>
     public partial class DiagrammWindow : Window
     {
+        private DataTable dataTable;
         public DiagrammWindow(DataTable data)
         {
             InitializeComponent();
-            
+
+            dataTable = data;
             chart.ChartAreas.Add(new ChartArea("defaultArea"));
             chart.Series.Add(new Series("Series"));
             
@@ -37,6 +39,14 @@ namespace CSVConverter
             }
             
             chart.Series["Series"].Points.DataBindXY(countries, count);
+            
+        }
+
+        private void ExportToExcel(object sender, RoutedEventArgs e)
+        {
+            Exporter exporter = new Exporter();
+            exporter.ExportStrategy = new ExcelExporter();
+            exporter.Export(dataTable);
         }
     }
 }

@@ -88,6 +88,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Services\Components\ExcelComponents.cs" />
     <Compile Include="Services\TablePreparer\TablePreparer.cs" />
     <Compile Include="Services\Components\WordComponents.cs" />
     <Page Include="DiagrammWindow.xaml">

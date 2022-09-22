@@ -5,9 +5,9 @@ namespace CSVConverter
 {
     internal class TablePreparer
     {
-        internal void DeleteColumns(DataTable dataTable,int desiredSize, params string[] columnsName)
+        internal void DeleteColumns(DataTable dataTable,int desiredSize, params string[] columnsNameToDelete)
         {
-            foreach (var name in columnsName)
+            foreach (var name in columnsNameToDelete)
             {
                 dataTable.Columns.Remove(name);
             }
